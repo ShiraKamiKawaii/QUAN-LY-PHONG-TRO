@@ -1,0 +1,49 @@
+﻿<Window x:Class="GUI.View.AddKhachThue"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI.View"
+        mc:Ignorable="d"
+        xmlns:uc="clr-namespace:GUI.UserControlLC"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Name="AddKhachThueWindow"
+        WindowStartupLocation="CenterScreen"
+        Title="Thêm Khách Thuê" Height="490" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=AddKhachThueWindow}"></uc:ControlBarUC>
+        </Grid>
+        <materialDesign:Card Grid.Row="1">
+            <StackPanel Margin="0 0 0 10">
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Tên Khách Thuê" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding tenKT}"></TextBox>
+                <DatePicker Margin="5" materialDesign:HintAssist.Hint="Ngày Sinh" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Stretch" SelectedDate="{Binding ngaySinh, StringFormat='dd/MM/yyyy', UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Giới Tính" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding gioiTinh}"></TextBox>
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Địa Chỉ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding diaChi}"></TextBox>
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Điện Thoại" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding dienThoai}"></TextBox>
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="CCCD" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding CCCD}"></TextBox>
+                <ComboBox Margin="5"  DisplayMemberPath="tenPhong" ItemsSource="{Binding ListPhong}" SelectedItem="{Binding SelectedPhong, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Phòng" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
+                <DatePicker Margin="5" materialDesign:HintAssist.Hint="Ngày Vào" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Stretch" SelectedDate="{Binding SelectedPhong.ngayVao, StringFormat='dd/MM/yyyy', UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+                <DatePicker Margin="5" materialDesign:HintAssist.Hint="Ngày Hết" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Stretch" SelectedDate="{Binding SelectedPhong.ngayHet, StringFormat='dd/MM/yyyy', UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+            </StackPanel>
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="2">
+            <Button Margin="40 5 " Background="#FF00E676" Content="Tạo Khách Thuê"
+                    Command="{Binding AddKhachThueCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"></Button>
+        </materialDesign:Card>
+    </Grid>
+</Window>

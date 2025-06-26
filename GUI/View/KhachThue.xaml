@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="GUI.View.KhachThue"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUI.View"
+             mc:Ignorable="d"
+             xmlns:vm="clr-namespace:GUI.ViewModel"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
+             Style="{StaticResource Page_Style}"
+             d:DesignHeight="450" d:DesignWidth="900">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <materialDesign:Card Grid.Row="0" Margin="5">
+            <WrapPanel>
+                <Button Margin="5" Background="#FF00E676" ToolTip="Thêm Khách Thuê" Command="{Binding AddKhachThueFormCommand}">
+                    <materialDesign:PackIcon
+            Width="50"
+            Height="25"
+            Kind="PlusThick"/>
+                </Button>
+                <Button Margin="5" Command="{Binding EditKhachThueFormCommand}">
+                    <materialDesign:PackIcon
+            Width="50"
+            Height="25"
+            Kind="Pencil"/>
+                </Button>
+                <Button Margin="5" Background="#FFF02929" Command="{Binding DeleteKhachThueCommand}">
+                    <materialDesign:PackIcon
+            Width="50"
+            Height="25"
+            Kind="DeleteOutline"/>
+                </Button>
+                <Button Content="Xuất Excel" Margin="5" Background="#FF00E676"></Button>
+            </WrapPanel>
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
+            <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Phòng" DisplayMemberBinding="{Binding tenPhong}"></GridViewColumn>
+                        <GridViewColumn Header="Tên Khách Thuê" DisplayMemberBinding="{Binding tenkt}"></GridViewColumn>
+                        <GridViewColumn Header="Ngày Sinh" DisplayMemberBinding="{Binding ngaysinh, StringFormat='dd/MM/yyyy'}"></GridViewColumn>
+                        <GridViewColumn Header="Giới Tính" DisplayMemberBinding="{Binding gioitinh}"></GridViewColumn>
+                        <GridViewColumn Header="Địa Chỉ" DisplayMemberBinding="{Binding diachi}"></GridViewColumn>
+                        <GridViewColumn Header="Điện Thoại" DisplayMemberBinding="{Binding dienthoai}"></GridViewColumn>
+                        <GridViewColumn Header="CCCD" DisplayMemberBinding="{Binding cccd}"></GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

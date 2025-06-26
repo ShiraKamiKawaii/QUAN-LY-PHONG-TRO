@@ -9,6 +9,8 @@ using GUI.Utilities;
 using System.Collections.ObjectModel;
 using GUI.Model;
 using System.Windows;
+using OfficeOpenXml;
+using System.IO;
 
 namespace GUI.ViewModel
 {
@@ -21,6 +23,7 @@ namespace GUI.ViewModel
         public ICommand AddPhongCommand { get; set; }
         public ICommand EditPhongCommand { get; set; }
         public ICommand DeletePhongCommand { get; set; }
+        public ICommand ExportExcelCommand { get; set; }
         private string _tenPhong;
         private int _giaThue;
         private int _tienNo;
@@ -160,7 +163,83 @@ namespace GUI.ViewModel
                     }
                 }
             );
+            ExportExcelCommand = new RelayCommand<object>((p) => List != null && List.Count > 0, (p) => ExportToExcel());
 
-    }
+        }
+        private void ExportToExcel()
+        {
+            try
+            {
+                var dialog = new Microsoft.Win32.SaveFileDialog()
+                {
+                    Filter = "Excel Files|*.xlsx",
+                    FileName = "DanhSachPhong.xlsx"
+                };
+
+                if (dialog.ShowDialog() == true)
+                {
+                    // Khai báo License EPPlus 8+
+                    ExcelPackage.License.SetNonCommercialPersonal("Tên của bạn");
+
+                    using (var package = new ExcelPackage())
+                    {
+                        var ws = package.Workbook.Worksheets.Add("DanhSachPhong");
+
+                        // Tiêu đề cột
+                        ws.Cells[1, 1].Value = "Mã Phòng";
+                        ws.Cells[1, 2].Value = "Tên Phòng";
+                        ws.Cells[1, 3].Value = "Giá Thuê";
+                        ws.Cells[1, 4].Value = "Tiền Nợ";
+                        ws.Cells[1, 5].Value = "Diện Tích";
+                        ws.Cells[1, 6].Value = "Ngày Vào";
+                        ws.Cells[1, 7].Value = "Ngày Hết";
+                        ws.Cells[1, 8].Value = "Tình Trạng";
+
+                        using (var range = ws.Cells[1, 1, 1, 8])
+                        {
+                            range.Style.Font.Bold = true;
+                            range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                            range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                            range.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                        }
+
+                        // Ghi dữ liệu từng dòng
+                        for (int i = 0; i < List.Count; i++)
+                        {
+                            var item = List[i];
+                            ws.Cells[i + 2, 1].Value = item.maPhong;
+                            ws.Cells[i + 2, 2].Value = item.tenPhong;
+                            ws.Cells[i + 2, 3].Value = item.giaThue;
+                            ws.Cells[i + 2, 4].Value = item.tienNo;
+                            ws.Cells[i + 2, 5].Value = item.dienTich;
+                            ws.Cells[i + 2, 6].Value = item.ngayVao?.ToString("dd/MM/yyyy");
+                            ws.Cells[i + 2, 7].Value = item.ngayHet?.ToString("dd/MM/yyyy");
+                            ws.Cells[i + 2, 8].Value = item.tinhTrang;
+                        }
+
+                        ws.Cells.AutoFitColumns();
+
+                        // Bo viền toàn bộ bảng
+                        int totalRows = List.Count + 1;
+                        using (var all = ws.Cells[1, 1, totalRows, 8])
+                        {
+                            all.Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            all.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            all.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            all.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        }
+
+                        package.SaveAs(new FileInfo(dialog.FileName));
+
+                        System.Windows.MessageBox.Show("Xuất danh sách phòng thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Lỗi xuất Excel: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
 }

@@ -41,7 +41,7 @@
             Height="25"
             Kind="DeleteOutline"/>
                 </Button>
-                <Button Content="Xuất Excel" Margin="5" Background="#FF00E676"></Button>
+                <Button Content="Xuất Excel" Margin="5" Background="#FF00E676" Command="{Binding ExportExcelCommand}"></Button>
             </WrapPanel>
         </materialDesign:Card>
         <materialDesign:Card Grid.Row="1" Margin="5" VerticalAlignment="Stretch">

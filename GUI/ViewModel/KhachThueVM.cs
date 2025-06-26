@@ -1,13 +1,16 @@
 ﻿using GUI.Model;
 using GUI.View;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+
 
 namespace GUI.ViewModel
 {
@@ -22,6 +25,7 @@ namespace GUI.ViewModel
         public ICommand AddKhachThueCommand { get; set; }
         public ICommand EditKhachThueCommand { get; set; }
         public ICommand DeleteKhachThueCommand { get;set; }
+        public ICommand ExportExcelCommand { get; set; }
         private string _tenKT;
         private DateTime? _ngaySinh;
         private string _gioiTinh;
@@ -80,7 +84,7 @@ namespace GUI.ViewModel
             public string dienthoai { get; set; }
             public string cccd { get; set; }
             public int maPhong { get; set; }
-            public string tenPhong { get; set; } // Dữ liệu bổ sung từ bảng Phong
+            public string tenPhong { get; set; }
         }
         private void LoadList()
         {
@@ -240,6 +244,79 @@ namespace GUI.ViewModel
                     }
                 }
             );
+            ExportExcelCommand = new RelayCommand<object>((p) => List != null && List.Count > 0, (p) => ExportToExcel());
+
         }
+        private void ExportToExcel()
+        {
+            try
+            {
+                var dialog = new Microsoft.Win32.SaveFileDialog()
+                {
+                    Filter = "Excel Files|*.xlsx",
+                    FileName = "DanhSachKhachThue.xlsx"
+                };
+
+                if (dialog.ShowDialog() == true)
+                {
+                    ExcelPackage.License.SetNonCommercialPersonal("Tên của bạn");
+
+                    using (var package = new ExcelPackage())
+                    {
+                        var ws = package.Workbook.Worksheets.Add("KhachThue");
+
+                        ws.Cells[1, 1].Value = "Mã Khách Thuê";
+                        ws.Cells[1, 2].Value = "Tên Khách Thuê";
+                        ws.Cells[1, 3].Value = "Ngày Sinh";
+                        ws.Cells[1, 4].Value = "Giới Tính";
+                        ws.Cells[1, 5].Value = "Địa Chỉ";
+                        ws.Cells[1, 6].Value = "Điện Thoại";
+                        ws.Cells[1, 7].Value = "CCCD";
+                        ws.Cells[1, 8].Value = "Tên Phòng";
+
+                        using (var range = ws.Cells[1, 1, 1, 8])
+                        {
+                            range.Style.Font.Bold = true;
+                            range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                            range.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                            range.Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                        }
+                        for (int i = 0; i < List.Count; i++)
+                        {
+                            var item = List[i];
+                            ws.Cells[i + 2, 1].Value = item.makt;
+                            ws.Cells[i + 2, 2].Value = item.tenkt;
+                            ws.Cells[i + 2, 3].Value = item.ngaysinh?.ToString("dd/MM/yyyy");
+                            ws.Cells[i + 2, 4].Value = item.gioitinh;
+                            ws.Cells[i + 2, 5].Value = item.diachi;
+                            ws.Cells[i + 2, 6].Value = item.dienthoai;
+                            ws.Cells[i + 2, 7].Value = item.cccd;
+                            ws.Cells[i + 2, 8].Value = item.tenPhong;
+                        }
+
+                        ws.Cells.AutoFitColumns();
+                        int totalRows = List.Count + 1;
+                        using (var all = ws.Cells[1, 1, totalRows, 8])
+                        {
+                            all.Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            all.Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            all.Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            all.Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        }
+
+                        var file = new FileInfo(dialog.FileName);
+                        package.SaveAs(file);
+
+                        System.Windows.MessageBox.Show("Xuất Excel thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Lỗi xuất Excel: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
     }
 }

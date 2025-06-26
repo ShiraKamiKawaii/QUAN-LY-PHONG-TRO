@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -129,6 +129,9 @@
     <Compile Include="View\AddDichVu.xaml.cs">
       <DependentUpon>AddDichVu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AddHoaDon.xaml.cs">
+      <DependentUpon>AddHoaDon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddKhachThue.xaml.cs">
       <DependentUpon>AddKhachThue.xaml</DependentUpon>
     </Compile>
@@ -143,6 +146,9 @@
     </Compile>
     <Compile Include="View\EditDichVu.xaml.cs">
       <DependentUpon>EditDichVu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditHoaDon.xaml.cs">
+      <DependentUpon>EditHoaDon.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditKhachThue.xaml.cs">
       <DependentUpon>EditKhachThue.xaml</DependentUpon>
@@ -198,6 +204,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AddHoaDon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddKhachThue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -215,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditDichVu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditHoaDon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

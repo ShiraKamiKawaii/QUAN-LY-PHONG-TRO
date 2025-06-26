@@ -22,25 +22,27 @@
         </Grid.RowDefinitions>
         <materialDesign:Card Grid.Row="0" Margin="5">
             <WrapPanel>
-                <Button Margin="5" Background="#FF00E676">
+                <Button Margin="5" Background="#FF00E676" Command="{Binding AddHoaDonFormCommand}">
                     <materialDesign:PackIcon
             Width="50"
             Height="25"
             Kind="PlusThick"/>
                 </Button>
-                <Button Margin="5">
+                <Button Margin="5" Command="{Binding EditHoaDonFormCommand}">
                     <materialDesign:PackIcon
             Width="50"
             Height="25"
             Kind="Pencil"/>
                 </Button>
-                <Button Margin="5" Background="#FFF02929">
+                <Button Margin="5" Background="#FFF02929" Command="{Binding DeleteHoaDonCommand}">
                     <materialDesign:PackIcon
             Width="50"
             Height="25"
             Kind="DeleteOutline"/>
                 </Button>
-                <Button Margin="5" Background="#FF00E676">
+                <Button Margin="5" Background="#FF00E676" Content="Thu Tiền" Command="{Binding ThuTienCommand}">
+                </Button>
+                <Button Margin="5" Background="#FF00E676" Command="{Binding PrintCommand}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
@@ -56,16 +58,18 @@
             </WrapPanel>
         </materialDesign:Card>
         <materialDesign:Card Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
-            <ListView ItemsSource="{Binding List}">
+            <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Tên Phòng" DisplayMemberBinding="{Binding tenPhong}"></GridViewColumn>
-                        <GridViewColumn Header="Tiền Phòng" DisplayMemberBinding="{Binding tenPhong}"></GridViewColumn>
-                        <GridViewColumn Header="Tiền Điện" DisplayMemberBinding="{Binding tenPhong}"></GridViewColumn>
-                        <GridViewColumn Header="Tiền Nước" DisplayMemberBinding="{Binding tenPhong}"></GridViewColumn>
-                        <GridViewColumn Header="Tổng cộng" DisplayMemberBinding="{Binding tenPhong}"></GridViewColumn>
-                        <GridViewColumn Header="Cần Thu" DisplayMemberBinding="{Binding tenPhong}"></GridViewColumn>
-                        <GridViewColumn Header="Trạng Thái" DisplayMemberBinding="{Binding tenPhong}"></GridViewColumn>
+                        <GridViewColumn Header="Tiền Phòng" DisplayMemberBinding="{Binding tienPhong}"></GridViewColumn>
+                        <GridViewColumn Header="Tiền Điện" DisplayMemberBinding="{Binding tienDien}"></GridViewColumn>
+                        <GridViewColumn Header="Tiền Nước" DisplayMemberBinding="{Binding tienNuoc}"></GridViewColumn>
+                        <GridViewColumn Header="Vệ Sinh" DisplayMemberBinding="{Binding veSinh}"></GridViewColumn>
+                        <GridViewColumn Header="Internet" DisplayMemberBinding="{Binding internet}"></GridViewColumn>
+                        <GridViewColumn Header="Tổng cộng" DisplayMemberBinding="{Binding tong}"></GridViewColumn>
+                        <GridViewColumn Header="Cần Thu" DisplayMemberBinding="{Binding canThu}"></GridViewColumn>
+                        <GridViewColumn Header="Trạng Thái" DisplayMemberBinding="{Binding trangThai}"></GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>

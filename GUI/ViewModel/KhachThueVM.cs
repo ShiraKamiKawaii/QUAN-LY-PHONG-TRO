@@ -20,12 +20,15 @@ namespace GUI.ViewModel
         public ObservableCollection<KhachThueFull> List { get => _List; set { _List = value; OnPropertyChanged(); } }
         private ObservableCollection<Model.Phong> _ListPhong;
         public ObservableCollection<Model.Phong> ListPhong { get => _ListPhong; set { _ListPhong = value; OnPropertyChanged(); } }
+        private ObservableCollection<Model.Nha> _ListNha;
+        public ObservableCollection<Model.Nha> ListNha { get => _ListNha; set { _ListNha = value; OnPropertyChanged(); } }
         public ICommand AddKhachThueFormCommand { get; set; }
         public ICommand EditKhachThueFormCommand { get; set; }
         public ICommand AddKhachThueCommand { get; set; }
         public ICommand EditKhachThueCommand { get; set; }
         public ICommand DeleteKhachThueCommand { get;set; }
         public ICommand ExportExcelCommand { get; set; }
+        public Action OnReload { get; set; }
         private string _tenKT;
         private DateTime? _ngaySinh;
         private string _gioiTinh;
@@ -65,7 +68,44 @@ namespace GUI.ViewModel
                 OnPropertyChanged();
             }
         }
-
+        private Model.Nha _SelectedNha;
+        public Model.Nha SelectedNha
+        {
+            get => _SelectedNha;
+            set
+            {
+                _SelectedNha = value;
+                OnPropertyChanged();
+                LoadKhachTheoNha();
+            }
+        }
+        private void LoadKhachTheoNha()
+        {
+            if (SelectedNha != null)
+            {
+                List = new ObservableCollection<KhachThueFull>(
+                    from kt in DataProvider.Ins.db.KhachThues
+                    join p in DataProvider.Ins.db.Phongs on kt.maPhong equals p.maPhong
+                    where p.maNha == SelectedNha.maNha
+                    select new KhachThueFull
+                    {
+                        makt = kt.maKT,
+                        tenkt = kt.tenKT,
+                        ngaysinh = kt.ngaySinh,
+                        gioitinh = kt.gioiTinh,
+                        diachi = kt.diaChi,
+                        dienthoai = kt.dienThoai,
+                        cccd = kt.CCCD,
+                        maPhong = kt.maPhong,
+                        tenPhong = p.tenPhong
+                    }
+                );
+            }
+            else
+            {
+                List = new ObservableCollection<KhachThueFull>();
+            }
+        }
         public string tenKT { get => _tenKT; set { _tenKT = value; OnPropertyChanged(); } }
         public DateTime? ngaySinh { get => _ngaySinh; set { _ngaySinh = value; OnPropertyChanged(); } }
         public string gioiTinh { get => _gioiTinh; set { _gioiTinh = value; OnPropertyChanged(); } }
@@ -74,6 +114,27 @@ namespace GUI.ViewModel
         public string CCCD { get => _CCCD; set { _CCCD = value; OnPropertyChanged(); } }
         public string tenPhong { get => _tenPhong; set { _tenPhong = value; OnPropertyChanged(); } }
         public int maPhong { get => _maPhong; set { _maPhong = value; OnPropertyChanged(); } }
+        private void CapNhatTinhTrangPhong(int maPhong)
+        {
+            var phong = DataProvider.Ins.db.Phongs.FirstOrDefault(p => p.maPhong == maPhong);
+            if (phong != null)
+            {
+                // Kiểm tra còn khách thuê nào trong phòng hay không
+                bool conKhach = DataProvider.Ins.db.KhachThues.Any(kh => kh.maPhong == maPhong);
+
+                if (conKhach)
+                {
+                    phong.tinhTrang = "Đang ở";
+                }
+                else
+                {
+                    phong.tinhTrang = "Đang trống";
+                }
+
+                DataProvider.Ins.db.SaveChanges();
+            }
+        }
+
         public class KhachThueFull
         {
             public int makt { get; set; }
@@ -85,25 +146,6 @@ namespace GUI.ViewModel
             public string cccd { get; set; }
             public int maPhong { get; set; }
             public string tenPhong { get; set; }
-        }
-        private void LoadList()
-        {
-            List = new ObservableCollection<KhachThueFull>(
-                from kt in DataProvider.Ins.db.KhachThues
-                join p in DataProvider.Ins.db.Phongs on kt.maPhong equals p.maPhong
-                select new KhachThueFull
-                {
-                    makt = kt.maKT,
-                    tenkt = kt.tenKT,
-                    ngaysinh = kt.ngaySinh,
-                    gioitinh = kt.gioiTinh,
-                    diachi = kt.diaChi,
-                    dienthoai = kt.dienThoai,
-                    cccd = kt.CCCD,
-                    maPhong = kt.maPhong,
-                    tenPhong = p.tenPhong
-                }
-                );
         }
         public KhachThueVM()
         {
@@ -124,7 +166,23 @@ namespace GUI.ViewModel
                 }
                 );
             ListPhong = new ObservableCollection<Model.Phong>(DataProvider.Ins.db.Phongs.ToList());
-            AddKhachThueFormCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AddKhachThue wd = new AddKhachThue(); wd.ShowDialog(); });
+            ListNha = new ObservableCollection<Model.Nha>(DataProvider.Ins.db.Nhas);
+            if (ListNha != null && ListNha.Count > 0)
+            {
+                SelectedNha = ListNha.First();
+            }
+            AddKhachThueFormCommand = new RelayCommand<object>((p) => SelectedNha != null, (p) =>
+            {
+                var form = new AddKhachThue();
+                var addVM = new KhachThueVM
+                {
+                    SelectedNha = this.SelectedNha
+                };
+                addVM.ListPhong = new ObservableCollection<Model.Phong>(DataProvider.Ins.db.Phongs.Where(x => x.maNha == SelectedNha.maNha));
+                addVM.OnReload = LoadKhachTheoNha;
+                form.DataContext = addVM;
+                form.ShowDialog();
+            });
             EditKhachThueFormCommand = new RelayCommand<object>(
                 (p) => SelectedItem != null,
                 (p) =>
@@ -139,10 +197,12 @@ namespace GUI.ViewModel
                         diaChi = SelectedItem.diachi,
                         dienThoai = SelectedItem.dienthoai,
                         CCCD = SelectedItem.cccd,
-                        SelectedItem = SelectedItem
+                        SelectedItem = SelectedItem,
+                        SelectedNha = this.SelectedNha
                     };
-                    editVM.ListPhong = new ObservableCollection<Model.Phong>(DataProvider.Ins.db.Phongs.ToList());
+                    editVM.ListPhong = new ObservableCollection<Model.Phong>(DataProvider.Ins.db.Phongs.Where(x => x.maNha == SelectedNha.maNha));
                     editVM.SelectedPhong = editVM.ListPhong.FirstOrDefault(x => x.maPhong == SelectedItem.maPhong);
+                    editVM.OnReload = LoadKhachTheoNha;
                     formEdit.DataContext = editVM;
                     formEdit.ShowDialog();
                 }
@@ -187,18 +247,19 @@ namespace GUI.ViewModel
                 }
                 DataProvider.Ins.db.SaveChanges();
                 System.Windows.MessageBox.Show("Thêm khách thuê thành công");
+                OnReload?.Invoke();
                 if (p is Window window)
                 {
                     window.Close();
                 }
             }
             );
-            EditKhachThueCommand = new RelayCommand<object>((p) =>
+            EditKhachThueCommand = new RelayCommand<object>((parma) =>
             {
                 if (SelectedItem == null)
                     return false;
                 return DataProvider.Ins.db.KhachThues.Any(x => x.maKT == SelectedItem.makt);
-            }, (p) =>
+            }, (parma) =>
             {
                 if (string.IsNullOrWhiteSpace(tenKT) || string.IsNullOrWhiteSpace(diaChi) || string.IsNullOrWhiteSpace(dienThoai) || string.IsNullOrWhiteSpace(CCCD))
                 {
@@ -206,6 +267,7 @@ namespace GUI.ViewModel
                     return;
                 }
                 var kt = DataProvider.Ins.db.KhachThues.Where(x => x.maKT == SelectedItem.makt).SingleOrDefault();
+                int maPhongCu = kt.maPhong;
                 kt.tenKT = tenKT;
                 kt.ngaySinh = ngaySinh;
                 kt.gioiTinh = gioiTinh;
@@ -213,9 +275,32 @@ namespace GUI.ViewModel
                 kt.dienThoai = dienThoai;
                 kt.CCCD = CCCD;
                 kt.maPhong = SelectedPhong.maPhong;
+                
+                if (maPhongCu != SelectedPhong.maPhong)
+                {
+                    var phongMoi = DataProvider.Ins.db.Phongs.FirstOrDefault(p => p.maPhong == SelectedItem.maPhong);
+                    if (phongMoi != null)
+                    {
+                        SelectedPhong.ngayVao = phongMoi.ngayVao;
+                        SelectedPhong.ngayHet = phongMoi.ngayHet;
+                    }
+                    bool conKhach = DataProvider.Ins.db.KhachThues.Any(x => x.maPhong == maPhong);
+                    if (!conKhach)
+                    {
+                        var phong = DataProvider.Ins.db.Phongs.FirstOrDefault(p => p.maPhong == SelectedItem.maPhong);
+                        if (phong != null)
+                        {
+                            phong.ngayVao = null;
+                            phong.ngayHet = null;
+                        }
+                    }            
+                    CapNhatTinhTrangPhong(maPhongCu);
+                    CapNhatTinhTrangPhong(SelectedPhong.maPhong);
+                }
                 DataProvider.Ins.db.SaveChanges();
                 System.Windows.MessageBox.Show("Cập nhật khách thuê thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                if (p is Window window)
+                OnReload?.Invoke();
+                if (parma is Window window)
                 {
                     window.Close();
                 }
@@ -235,12 +320,21 @@ namespace GUI.ViewModel
                     if (kt != null)
                     {
                         DataProvider.Ins.db.KhachThues.Remove(kt);
-                        DataProvider.Ins.db.SaveChanges();
-
                         System.Windows.MessageBox.Show("Xóa khách thuê thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                        bool conKhach = DataProvider.Ins.db.KhachThues.Any(x => x.maPhong == maPhong);
+                        if (!conKhach)
+                        {
+                            var phong = DataProvider.Ins.db.Phongs.FirstOrDefault(parma => parma.maPhong == SelectedItem.maPhong);
+                            if(phong != null)
+                            {
+                                phong.ngayVao = null;
+                                phong.ngayHet = null;
+                            }
+                        }
+                        DataProvider.Ins.db.SaveChanges();
                         // Load lại danh sách nếu bạn có ListDichVu
-                        LoadList();
+                        CapNhatTinhTrangPhong(maPhong);
+                        LoadKhachTheoNha();
                     }
                 }
             );
@@ -307,7 +401,7 @@ namespace GUI.ViewModel
                         var file = new FileInfo(dialog.FileName);
                         package.SaveAs(file);
 
-                        System.Windows.MessageBox.Show("Xuất Excel thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        System.Windows.MessageBox.Show("Xuất danh sách khách thuê thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
             }

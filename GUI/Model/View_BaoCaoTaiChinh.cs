@@ -12,15 +12,16 @@ namespace GUI.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class ChiTietHoaDon
+    public partial class View_BaoCaoTaiChinh
     {
-        public int maCTHD { get; set; }
-        public int maHD { get; set; }
-        public int maDV { get; set; }
-        public Nullable<int> soLuong { get; set; }
-        public Nullable<int> donGia { get; set; }
-    
-        public virtual DichVu DichVu { get; set; }
-        public virtual HoaDon HoaDon { get; set; }
+        public int maNha { get; set; }
+        public string tenNha { get; set; }
+        public string thangNam { get; set; }
+        public Nullable<int> tongTienDien { get; set; }
+        public Nullable<int> tongTienNuoc { get; set; }
+        public Nullable<int> tongVeSinh { get; set; }
+        public Nullable<int> tongInternet { get; set; }
+        public Nullable<int> tongTienPhong { get; set; }
+        public Nullable<int> tongDaThu { get; set; }
     }
 }

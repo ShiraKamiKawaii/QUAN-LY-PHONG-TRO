@@ -12,25 +12,19 @@ namespace GUI.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class HoaDon
+    public partial class Nha
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HoaDon()
+        public Nha()
         {
-            this.ChiTietHoaDons = new HashSet<ChiTietHoaDon>();
+            this.Phongs = new HashSet<Phong>();
         }
     
-        public int maHD { get; set; }
-        public int maPhong { get; set; }
-        public int maKT { get; set; }
-        public Nullable<System.DateTime> ngayLap { get; set; }
-        public Nullable<int> tong { get; set; }
-        public Nullable<int> canThu { get; set; }
-        public string trangThai { get; set; }
+        public int maNha { get; set; }
+        public string tenNha { get; set; }
+        public string diaChi { get; set; }
     
-        public virtual KhachThue KhachThue { get; set; }
-        public virtual Phong Phong { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
+        public virtual ICollection<Phong> Phongs { get; set; }
     }
 }

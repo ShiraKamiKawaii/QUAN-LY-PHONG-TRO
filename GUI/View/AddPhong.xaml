@@ -18,7 +18,7 @@
         WindowStyle="None"
         Name="AddPhongWindow"
         WindowStartupLocation="CenterScreen"
-        Title="Thêm Phòng" Height="365" Width="300">
+        Title="Thêm Phòng" Height="400" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -31,11 +31,12 @@
         <materialDesign:Card Grid.Row="1">
             <StackPanel Margin="0 0 0 10">
                 <TextBox Margin="5" materialDesign:HintAssist.Hint="Tên Phòng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding tenPhong}"></TextBox>
-                <TextBox Margin="5" materialDesign:HintAssist.Hint="Giá Thuê" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding giaThue}"></TextBox>
-                <TextBox Margin="5" materialDesign:HintAssist.Hint="Tiền Nợ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding tienNo}"></TextBox>
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Giá Thuê" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding giaThue, StringFormat={}{0:N0}}"></TextBox>
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Tiền Nợ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding tienNo, StringFormat={}{0:N0}}"></TextBox>
                 <TextBox Margin="5" materialDesign:HintAssist.Hint="Diện Tích" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding dienTich}"></TextBox>
                 <DatePicker Margin="5" materialDesign:HintAssist.Hint="Ngày Vào" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Stretch" SelectedDate="{Binding ngayVao, StringFormat='dd/MM/yyyy'}"></DatePicker>
                 <DatePicker Margin="5" materialDesign:HintAssist.Hint="Ngày Hết" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Stretch" SelectedDate="{Binding ngayHet, StringFormat='dd/MM/yyyy'}"></DatePicker>
+                <ComboBox Margin="5"  DisplayMemberPath="tenNha" ItemsSource="{Binding ListNha}" SelectedItem="{Binding SelectedNha, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Nhà" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
             </StackPanel>
         </materialDesign:Card>
         <materialDesign:Card Grid.Row="2">

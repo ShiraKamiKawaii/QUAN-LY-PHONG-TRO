@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="GUI.View.HoaDonPrintUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUI.View"
+             mc:Ignorable="d" 
+               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="16"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
+             Style="{StaticResource Page_Style}"
+             d:DesignHeight="400" d:DesignWidth="300">
+    <Grid Background="White">
+        <Image Source="/IMG/nenhoadon.png" Stretch="Fill"/>
+        <StackPanel Margin="20">
+            <TextBlock Text="HÓA ĐƠN THANH TOÁN" FontSize="18" FontWeight="Bold" TextAlignment="Center" Margin="0 10"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <WrapPanel>
+                        <Label Content="Kính gửi: "/>
+                        <TextBlock Text="{Binding tenKT}" Margin="0 5"/>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <Label Content="Phòng: "/>
+                        <TextBlock Text="{Binding tenPhong}" Margin=" 0 5"/>
+                    </WrapPanel>
+                    
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <WrapPanel>
+                        <TextBlock Text="{Binding ngayLap, StringFormat='Ngày lập: {0:dd/MM/yyyy}'}" Margin="0 5"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <StackPanel>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="Khoản thu" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="Tiền phòng" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="Tiền điện" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="Tiền nước" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="Vệ sinh" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="Internet" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="Tổng tiền" Padding="5" FontWeight="Bold"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <StackPanel>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="Thành tiền" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="{Binding tienPhong, StringFormat='{}{0:N0} VNĐ'}" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="{Binding dien, StringFormat='{}{0:N0} VNĐ'}" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="{Binding nuoc, StringFormat='{}{0:N0} VNĐ'}" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="{Binding veSinh, StringFormat='{}{0:N0} VNĐ'}" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="{Binding internet, StringFormat='{}{0:N0} VNĐ'}" Padding="5"/>
+                        </Border>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="{Binding tong, StringFormat='{}{0:N0} VNĐ'}" Padding="5" FontWeight="Bold"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

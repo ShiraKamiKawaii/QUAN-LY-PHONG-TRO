@@ -18,13 +18,15 @@ namespace GUI.ViewModel
             set { _currentView = value; OnPropertyChanged(); }
         }
         public bool Isloaded = false;
+        public ICommand NhaCommand { get; set; }
         public ICommand PhongCommand { get; set; }
         public ICommand HoaDonCommand { get; set; }
         public ICommand DichVuCommand { get; set; }
         public ICommand KhachThueCommand { get; set; }
         public ICommand BaoCaoCommand { get; set; }
         public ICommand LoadedWindowCommand { get; set; }
-
+        public ICommand LogoutCommand { get; set; }
+        private void Nha(object obj) => CurrentView = new NhaVM();
         private void Phong(object obj) => CurrentView = new PhongVM();
         private void HoaDon(object obj) => CurrentView = new HoaDonVM();
         private void DichVu(object obj) => CurrentView = new DichVuVM();
@@ -51,19 +53,35 @@ namespace GUI.ViewModel
                 {
                     p.Close();
                 }
-            }
-                
-            );
-
+            });
+            NhaCommand = new RelayCommand(Nha);
             PhongCommand = new RelayCommand(Phong);
             HoaDonCommand = new RelayCommand(HoaDon);
             DichVuCommand = new RelayCommand(DichVu);
             KhachThueCommand = new RelayCommand(KhachThue);
             BaoCaoCommand = new RelayCommand(BaoCao);
-
-
             // Startup Page
             CurrentView = new PhongVM();
+            LogoutCommand = new RelayCommand<Window>((p) =>
+            {
+                return p != null;
+            },
+            (p) =>
+            {
+                if (p == null) return;
+                p.Hide();
+                Login login= new Login();
+                login.DataContext = new LoginVM();
+                login.ShowDialog();
+                if(login.DataContext is LoginVM vm && vm.IsLogin)
+                {
+                    p.Show();
+                }
+                else
+                {
+                    p.Close();
+                }
+            });
         }
     }
 }

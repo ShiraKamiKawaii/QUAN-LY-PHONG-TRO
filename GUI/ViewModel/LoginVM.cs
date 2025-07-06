@@ -24,13 +24,13 @@ namespace GUI.ViewModel
         public LoginVM()
         {
             IsLogin = false;
-            taiKhoan = "";
-            matKhau = "";
-            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { Login(p); });
-            CloseCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { p.Close(); });
+            taiKhoan = string.Empty;
+            matKhau = string.Empty;
+            LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CheckLogin(p); });
+            CloseCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { p?.Close(); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { matKhau = p.Password; });
         }
-        void Login(Window p)
+        void CheckLogin(Window p)
         {
             if (p == null)
                 return;
@@ -39,7 +39,7 @@ namespace GUI.ViewModel
             if (accCount > 0)
             {
                 IsLogin = true;
-
+                
                 p.Close();
             }
             else

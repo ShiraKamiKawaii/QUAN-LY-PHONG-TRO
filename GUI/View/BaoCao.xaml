@@ -7,6 +7,7 @@
              mc:Ignorable="d"
               xmlns:vm="clr-namespace:GUI.ViewModel"
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             TextElement.FontWeight="Regular"
             TextElement.FontSize="13"
@@ -22,14 +23,48 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <materialDesign:Card Grid.Row="0">
-            <TabControl Width="400" Style="{StaticResource MaterialDesignFilledTabControl}">
-                <TabItem Margin="5" Header="Tình trạng cho thuê">
-                    
-                </TabItem>
-                <TabItem Margin="5" Header="Báo cáo tài chính">
-                    
-                </TabItem>
-            </TabControl>
+            <GroupBox Header="Tình trạng cho thuê">
+                <ListView ItemsSource="{Binding ListTinhTrang}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Tên nhà cho thuê" DisplayMemberBinding="{Binding tenNha}"/>
+                            <GridViewColumn Header="Tổng phòng" DisplayMemberBinding="{Binding tongPhong}"/>
+                            <GridViewColumn Header="Đang thuê" DisplayMemberBinding="{Binding tyLePhongDangThue, StringFormat={}{0:0.##}%}"/>
+                            <GridViewColumn Header="Đang nợ" DisplayMemberBinding="{Binding tyLePhongNoTien, StringFormat={}{0:0.##}%}"/>
+                            <GridViewColumn Header="Tổng khách thuê hiện tại" DisplayMemberBinding="{Binding tongKhachThue}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="1">
+            <GroupBox Header="Tài chính">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:Card Grid.Row="0">
+                        <WrapPanel>
+                            <ComboBox Margin="5" Width="150" HorizontalAlignment="Left" DisplayMemberPath="tenNha" ItemsSource="{Binding ListNha}" SelectedItem="{Binding SelectedNha, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Nhà" Style="{StaticResource MaterialDesignOutlinedComboBox}" ></ComboBox>
+                            <DatePicker Margin="5" Width="150" materialDesign:HintAssist.Hint="Tháng" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignOutlinedDatePicker}" VerticalAlignment="Stretch" SelectedDate="{Binding SelectedDate, StringFormat='MM/yyyy'}"></DatePicker>
+                        </WrapPanel>
+                    </materialDesign:Card>
+                    <Grid Grid.Row="1">
+                        <ListView ItemsSource="{Binding ListTaiChinh}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Tiền điện (KwH)" DisplayMemberBinding="{Binding tongTienDien, StringFormat='{}{0:N0} VNĐ'}"/>
+                                    <GridViewColumn Header="Tiền nước" DisplayMemberBinding="{Binding tongTienNuoc, StringFormat='{}{0:N0} VNĐ'}"/>
+                                    <GridViewColumn Header="Vệ sinh" DisplayMemberBinding="{Binding tongVeSinh, StringFormat='{}{0:N0} VNĐ'}"/>
+                                    <GridViewColumn Header="Internet" DisplayMemberBinding="{Binding tongInternet, StringFormat='{}{0:N0} VNĐ'}"/>
+                                    <GridViewColumn Header="Tổng thu" DisplayMemberBinding="{Binding tongDaThu, StringFormat='{}{0:N0} VNĐ'}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </Grid>
+            </GroupBox>
         </materialDesign:Card>
     </Grid>
 </UserControl>

@@ -53,7 +53,7 @@
                         <GridViewColumn Header="Mã Dịch Vụ" DisplayMemberBinding="{Binding maDV}"></GridViewColumn>
                         <GridViewColumn Header="Tên Dịch Vụ" DisplayMemberBinding="{Binding tenDV}"></GridViewColumn>
                         <GridViewColumn Header="Đơn Vị Tính" DisplayMemberBinding="{Binding donVi}"></GridViewColumn>
-                        <GridViewColumn Header="Đơn Giá" DisplayMemberBinding="{Binding donGia}"></GridViewColumn>
+                        <GridViewColumn Header="Đơn Giá" DisplayMemberBinding="{Binding donGia, StringFormat={}{0:N0}}"></GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>

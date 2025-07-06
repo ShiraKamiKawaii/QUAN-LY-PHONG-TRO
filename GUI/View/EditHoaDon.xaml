@@ -5,8 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI.View"
         mc:Ignorable="d"
-        Title="EditHoaDon" Height="450" Width="800">
+        xmlns:vm="clr-namespace:GUI.ViewModel"
+        xmlns:uc="clr-namespace:GUI.UserControlLC"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Name="EditHoaDonWindow"
+        WindowStartupLocation="CenterScreen"
+        Title="Sửa Hóa Đơn" Height="830" Width="400">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=EditHoaDonWindow}"></uc:ControlBarUC>
+        </Grid>
+        <materialDesign:Card Grid.Row="1">
+            <StackPanel Margin="0 0 0 10">
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Phòng" VerticalAlignment="Stretch" Text="{Binding tenPhong}" IsReadOnly="True" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                <DatePicker Margin="5" materialDesign:HintAssist.Hint="Ngày Lập Hóa Đơn" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Stretch" SelectedDate="{Binding ngayLap, StringFormat='dd/MM/yyyy', UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Tiền Phòng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding tienPhong, Mode=TwoWay, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <GroupBox Header="Điện" Margin="5">
+                    <StackPanel>
+                        <TextBox Margin="5" materialDesign:HintAssist.Hint="Số cũ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding chiSoCuDien, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Margin="5" materialDesign:HintAssist.Hint="Số mới" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding chiSoMoiDien, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Nước" Margin="5">
+                    <StackPanel>
+                        <TextBox Margin="5" materialDesign:HintAssist.Hint="Số cũ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding chiSoCuNuoc, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Margin="5" materialDesign:HintAssist.Hint="Số mới" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding chiSoMoiNuoc, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Vệ Sinh" Margin="5">
+                    <TextBox Margin="5" materialDesign:HintAssist.Hint="Số người" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding soNguoi, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </GroupBox>
+                <GroupBox Header="Internet" Margin="5">
+                    <TextBox Margin="5" materialDesign:HintAssist.Hint="Tháng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding soThangInternet, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </GroupBox>
+                <WrapPanel Margin="5">
+                    <Label Content="Tổng cộng:" Margin="5" Height="30" FontWeight="Bold" FontSize="17" Background="White" Foreground="#E554D01E"/>
+                    <TextBlock Margin="5" Height="30" Padding="5" FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Text="{Binding tong, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"></TextBlock>
+                </WrapPanel>
+            </StackPanel>
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="2">
+            <Button Margin="40 5 " Background="#FF00E676" Content="Lưu" Command="{Binding EditHoaDonCommand}"
+            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"></Button>
+        </materialDesign:Card>
     </Grid>
 </Window>

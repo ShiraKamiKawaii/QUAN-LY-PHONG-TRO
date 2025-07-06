@@ -19,6 +19,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <materialDesign:Card Grid.Row="0" Margin="5">
@@ -44,7 +45,10 @@
                 <Button Content="Xuất Excel" Margin="5" Background="#FF00E676" Command="{Binding ExportExcelCommand}"></Button>
             </WrapPanel>
         </materialDesign:Card>
-        <materialDesign:Card Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
+        <materialDesign:Card Grid.Row="1" Margin="5 5 5 0">
+            <ComboBox Margin="5" Width="150" HorizontalAlignment="Left" BorderBrush="LightGray" DisplayMemberPath="tenNha" ItemsSource="{Binding ListNha}" SelectedItem="{Binding SelectedNha, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Nhà" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="2" Margin="5" VerticalAlignment="Stretch">
             <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}">
                 <ListView.View>
                     <GridView>

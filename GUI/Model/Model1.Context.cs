@@ -25,11 +25,15 @@ namespace GUI.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; }
         public virtual DbSet<DichVu> DichVus { get; set; }
+        public virtual DbSet<DichVuPhong> DichVuPhongs { get; set; }
         public virtual DbSet<HoaDon> HoaDons { get; set; }
         public virtual DbSet<KhachThue> KhachThues { get; set; }
         public virtual DbSet<NguoiDung> NguoiDungs { get; set; }
+        public virtual DbSet<Nha> Nhas { get; set; }
         public virtual DbSet<Phong> Phongs { get; set; }
+        public virtual DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; }
+        public virtual DbSet<V_BaoCaoTinhTrang> V_BaoCaoTinhTrang { get; set; }
+        public virtual DbSet<View_BaoCaoTaiChinh> View_BaoCaoTaiChinh { get; set; }
     }
 }

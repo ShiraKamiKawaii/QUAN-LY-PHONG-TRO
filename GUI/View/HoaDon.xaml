@@ -18,6 +18,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <materialDesign:Card Grid.Row="0" Margin="5">
@@ -28,7 +29,7 @@
             Height="25"
             Kind="PlusThick"/>
                 </Button>
-                <Button Margin="5" Command="{Binding EditHoaDonFormCommand}">
+                <Button Margin="5" Command="{Binding EditHoaDonFormCommand, UpdateSourceTrigger=PropertyChanged}">
                     <materialDesign:PackIcon
             Width="50"
             Height="25"
@@ -57,18 +58,22 @@
                 </Button>
             </WrapPanel>
         </materialDesign:Card>
-        <materialDesign:Card Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
+        <materialDesign:Card Grid.Row="1" Margin="5 5 5 0">
+            <ComboBox Margin="5" Width="150" HorizontalAlignment="Left" BorderBrush="LightGray" DisplayMemberPath="tenNha" ItemsSource="{Binding ListNha}" SelectedItem="{Binding SelectedNha, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Nhà" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
+        </materialDesign:Card>
+        <materialDesign:Card Grid.Row="2" Margin="5" VerticalAlignment="Stretch">
             <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Tên Phòng" DisplayMemberBinding="{Binding tenPhong}"></GridViewColumn>
-                        <GridViewColumn Header="Tiền Phòng" DisplayMemberBinding="{Binding tienPhong}"></GridViewColumn>
-                        <GridViewColumn Header="Tiền Điện" DisplayMemberBinding="{Binding tienDien}"></GridViewColumn>
-                        <GridViewColumn Header="Tiền Nước" DisplayMemberBinding="{Binding tienNuoc}"></GridViewColumn>
-                        <GridViewColumn Header="Vệ Sinh" DisplayMemberBinding="{Binding veSinh}"></GridViewColumn>
-                        <GridViewColumn Header="Internet" DisplayMemberBinding="{Binding internet}"></GridViewColumn>
-                        <GridViewColumn Header="Tổng cộng" DisplayMemberBinding="{Binding tong}"></GridViewColumn>
-                        <GridViewColumn Header="Cần Thu" DisplayMemberBinding="{Binding canThu}"></GridViewColumn>
+                        <GridViewColumn Header="Ngày Lập" DisplayMemberBinding="{Binding ngayLap, StringFormat='dd/MM/yyyy'}"/>
+                        <GridViewColumn Header="Tiền Phòng" DisplayMemberBinding="{Binding tienPhong, StringFormat={}{0:N0}}"></GridViewColumn>
+                        <GridViewColumn Header="Tiền Điện" DisplayMemberBinding="{Binding tienDien, StringFormat={}{0:N0}}"></GridViewColumn>
+                        <GridViewColumn Header="Tiền Nước" DisplayMemberBinding="{Binding tienNuoc, StringFormat={}{0:N0}}"></GridViewColumn>
+                        <GridViewColumn Header="Vệ Sinh" DisplayMemberBinding="{Binding veSinh, StringFormat={}{0:N0}}"></GridViewColumn>
+                        <GridViewColumn Header="Internet" DisplayMemberBinding="{Binding internet, StringFormat={}{0:N0}}"></GridViewColumn>
+                        <GridViewColumn Header="Tổng cộng" DisplayMemberBinding="{Binding tong, StringFormat={}{0:N0}}"></GridViewColumn>
+                        <GridViewColumn Header="Cần Thu" DisplayMemberBinding="{Binding canThu, StringFormat={}{0:N0}}"></GridViewColumn>
                         <GridViewColumn Header="Trạng Thái" DisplayMemberBinding="{Binding trangThai}"></GridViewColumn>
                     </GridView>
                 </ListView.View>

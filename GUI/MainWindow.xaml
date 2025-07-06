@@ -19,6 +19,7 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         Name="mainWindow"
+        Icon="/IMG/logo.ico"
         DataContext="{StaticResource MainVM}"
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="895" Width="1379">
@@ -58,8 +59,23 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" ToolTip="Quản lý phòng" Command="{Binding PhongCommand}">
+                    <Button Grid.Column="0" ToolTip="Quản lý nhà" Command="{Binding NhaCommand}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock Text="Quản lý nhà" HorizontalAlignment="Center"></TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="HomeCityOutline" />
+                            </Grid>
+                        </Grid>
+                    </Button>
+                    <Button Grid.Column="1" ToolTip="Quản lý phòng" Command="{Binding PhongCommand}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -73,7 +89,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="1" ToolTip="Quản lý hóa đơn" Command="{Binding HoaDonCommand}">
+                    <Button Grid.Column="2" ToolTip="Quản lý hóa đơn" Command="{Binding HoaDonCommand}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -87,7 +103,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="2" ToolTip="Quản lý dịch vụ" Command="{Binding DichVuCommand}">
+                    <Button Grid.Column="3" ToolTip="Quản lý dịch vụ" Command="{Binding DichVuCommand}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -101,7 +117,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="3" ToolTip="Quản lý khách thuê" Command="{Binding KhachThueCommand}">
+                    <Button Grid.Column="4" ToolTip="Quản lý khách thuê" Command="{Binding KhachThueCommand}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -115,7 +131,7 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="4" ToolTip="Báo cáo" Command="{Binding BaoCaoCommand}">
+                    <Button Grid.Column="5" ToolTip="Báo cáo" Command="{Binding BaoCaoCommand}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
@@ -129,17 +145,17 @@
                             </Grid>
                         </Grid>
                     </Button>
-                    <Button Grid.Column="5" ToolTip="Người dùng">
+                    <Button Grid.Column="6" ToolTip="Đăng xuất" Command="{Binding LogoutCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="Người dùng" HorizontalAlignment="Center"></TextBlock>
+                                <TextBlock Text="Đăng xuất" HorizontalAlignment="Center"></TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="AccountSettingsOutline" />
+                                <materialDesign:PackIcon Width="24" Height="24"  HorizontalAlignment="Center"  Kind="Logout" />
                             </Grid>
                         </Grid>
                     </Button>

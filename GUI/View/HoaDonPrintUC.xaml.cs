@@ -10,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GUI.ViewModel;
 
 namespace GUI.View
 {
     /// <summary>
-    /// Interaction logic for EditHoaDon.xaml
+    /// Interaction logic for HoaDonPrintUC.xaml
     /// </summary>
-    public partial class EditHoaDon : Window
+    public partial class HoaDonPrintUC : UserControl
     {
-        public EditHoaDon()
+        public HoaDonPrintUC()
         {
             InitializeComponent();
-            this.DataContext = new HoaDonVM();
         }
     }
 }

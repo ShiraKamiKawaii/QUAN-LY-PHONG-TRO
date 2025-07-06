@@ -33,10 +33,17 @@
             <StackPanel Margin="0 0 0 10">
                 <TextBox Margin="5" materialDesign:HintAssist.Hint="Tên Dịch Vụ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch"
                          Text="{Binding tenDV, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <TextBox Margin="5" materialDesign:HintAssist.Hint="Đơn Vị Tính" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch"
-                         Text="{Binding donVi, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <ComboBox SelectedValue="{Binding donVi, UpdateSourceTrigger=PropertyChanged}" 
+                SelectedValuePath="Content" Margin="5"
+                materialDesign:HintAssist.Hint="Đơn vị"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}" VerticalAlignment="Stretch">
+                    <ComboBoxItem Content="KwH" />
+                    <ComboBoxItem Content="Tháng" />
+                    <ComboBoxItem Content="Người" />
+                    <ComboBoxItem Content="Khối" />
+                </ComboBox>
                 <TextBox Margin="5" materialDesign:HintAssist.Hint="Đơn Giá" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch"
-                         Text="{Binding donGia, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                         Text="{Binding donGia, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </StackPanel>
         </materialDesign:Card>
         <materialDesign:Card Grid.Row="2">

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using GUI.ViewModel;
 namespace GUI.View
 {
     /// <summary>
@@ -23,6 +23,7 @@ namespace GUI.View
         public BaoCao()
         {
             InitializeComponent();
+            this.DataContext = new BaoCaoVM();
         }
     }
 }

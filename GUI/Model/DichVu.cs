@@ -17,6 +17,7 @@ namespace GUI.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DichVu()
         {
+            this.DichVuPhongs = new HashSet<DichVuPhong>();
             this.ChiTietHoaDons = new HashSet<ChiTietHoaDon>();
         }
     
@@ -25,6 +26,8 @@ namespace GUI.Model
         public string donVi { get; set; }
         public Nullable<int> donGia { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DichVuPhong> DichVuPhongs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
     }

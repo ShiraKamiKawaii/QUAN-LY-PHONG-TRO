@@ -18,7 +18,7 @@
         WindowStyle="None"
         Name="EditPhongWindow"
         WindowStartupLocation="CenterScreen"
-        Title="Sửa Phòng" Height="365" Width="300">
+        Title="Sửa Phòng" Height="400" Width="300">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -32,11 +32,12 @@
         <materialDesign:Card Grid.Row="1">
             <StackPanel Margin="0 0 0 10">
                 <TextBox Margin="5" materialDesign:HintAssist.Hint="Tên Phòng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding tenPhong, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <TextBox Margin="5" materialDesign:HintAssist.Hint="Giá Thuê" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding giaThue, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <TextBox Margin="5" materialDesign:HintAssist.Hint="Tiền Nợ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding tienNo, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Giá Thuê" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding giaThue, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Tiền Nợ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding tienNo, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <TextBox Margin="5" materialDesign:HintAssist.Hint="Diện Tích" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding dienTich, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <DatePicker Margin="5" materialDesign:HintAssist.Hint="Ngày Vào" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Stretch" SelectedDate="{Binding ngayVao, StringFormat='dd/MM/yyyy', UpdateSourceTrigger=PropertyChanged}"></DatePicker>
                 <DatePicker Margin="5" materialDesign:HintAssist.Hint="Ngày Hết" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Stretch" SelectedDate="{Binding ngayHet, StringFormat='dd/MM/yyyy', UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+                <ComboBox Margin="5"  DisplayMemberPath="tenNha" ItemsSource="{Binding ListNha}" SelectedItem="{Binding SelectedNha, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Nhà" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
             </StackPanel>
         </materialDesign:Card>
         <materialDesign:Card Grid.Row="2">

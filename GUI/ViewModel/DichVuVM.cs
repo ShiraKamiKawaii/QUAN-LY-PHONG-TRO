@@ -21,7 +21,7 @@ namespace GUI.ViewModel
         public ICommand AddDichVuCommand { get; set; }
         public ICommand EditDichVuCommand { get; set; }
         public ICommand DeleteDichVuCommand { get; set; }
-        
+        public Action OnReload { get; set; }
 
         private string _tenDV;
         private string _donVi;
@@ -51,7 +51,7 @@ namespace GUI.ViewModel
         public DichVuVM()
         {
             List = new ObservableCollection<Model.DichVu>(DataProvider.Ins.db.DichVus);
-            AddDichVuFormCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AddDichVu wd = new AddDichVu(); wd.ShowDialog(); });
+            AddDichVuFormCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AddDichVu wd = new AddDichVu(); DichVuVM vm = new DichVuVM(); vm.OnReload = LoadDichVu; wd.DataContext = vm; wd.ShowDialog(); });
             EditDichVuFormCommand = new RelayCommand<object>(
                 (p) => SelectedItem != null,
                 (p) =>
@@ -64,6 +64,7 @@ namespace GUI.ViewModel
                         donGia = (int)SelectedItem.donGia,
                         SelectedItem = SelectedItem
                     };
+                    editVM.OnReload = LoadDichVu;
                     formEdit.DataContext = editVM;
                     formEdit.ShowDialog();
                 }
@@ -94,6 +95,7 @@ namespace GUI.ViewModel
                 DataProvider.Ins.db.DichVus.Add(DichVu);
                 DataProvider.Ins.db.SaveChanges();
                 System.Windows.MessageBox.Show("Thêm dịch vụ thành công");
+                OnReload?.Invoke();
                 if (p is Window window)
                 {
                     window.Close();
@@ -118,6 +120,7 @@ namespace GUI.ViewModel
                 DV.donGia = donGia;
                 DataProvider.Ins.db.SaveChanges();
                 System.Windows.MessageBox.Show("Cập nhật dịch vụ thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                OnReload?.Invoke();
                 if (p is Window window)
                 window.Close();
             });

@@ -2,7 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:GUI.ViewModel"
                     xmlns:view="clr-namespace:GUI.View">
-                    
+    <DataTemplate DataType="{x:Type vm:NhaVM}">
+        <view:Nha />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type vm:PhongVM}">
         <view:Phong />
     </DataTemplate>

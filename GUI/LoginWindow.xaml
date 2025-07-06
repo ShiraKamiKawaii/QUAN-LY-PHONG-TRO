@@ -20,9 +20,9 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Name="loginWindow"
+        Icon="/IMG/logo.ico"
         DataContext="{StaticResource LoginVM}"
-        Title="Đăng nhập" Height="300" Width="400">
-        
+        Title="Đăng nhập" Height="350" Width="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -31,54 +31,58 @@
         <Grid Grid.Row="0">
             <uc:ControlBarUC Tag="{Binding Title, ElementName=loginWindow}"></uc:ControlBarUC>
         </Grid>
-        <materialDesign:Card Grid.Row="1" Width="330" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Grid>
-                <Grid.Resources>
-                    <Style TargetType="Grid">
-                        <Setter Property="Margin" Value="15 0 15 0"></Setter>
-                    </Style>
-                </Grid.Resources>
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <TextBox materialDesign:HintAssist.Hint="Tên đăng nhập"
-                             Text="{Binding taiKhoan}"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                </Grid>
-                <Grid Grid.Row="1">
-                    <PasswordBox x:Name="FloatingPasswordBox"
-                                 materialDesign:HintAssist.Hint="Mật khẩu"
-                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PasswordChanged">
-                                <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" 
-                                   CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </PasswordBox>
-                </Grid>
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1">
+            <Image Source="/IMG/nenlogin.png" Stretch="Fill"/>
+            <materialDesign:Card Width="330" Height="170" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#66FFFFFF">
 
-                    <Button Grid.Column="0"  Command="{Binding LoginCommand}"  
-                            CommandParameter="{Binding ElementName=loginWindow}"
-                            Style="{StaticResource MaterialDesignRaisedButton}"    
-                            Width="110"    
-                            ToolTip="Resource name: MaterialDesignRaisedButton" Content="Đăng nhập"></Button>
-                    <Button Grid.Column="1"  Command="{Binding CloseCommand}"
-                            CommandParameter="{Binding ElementName=loginWindow}"
-                            Style="{StaticResource MaterialDesignRaisedButton}"    
-                            Width="110"    
-                            Background="OrangeRed"
-                            ToolTip="Resource name: MaterialDesignRaisedButton" Content="Thoát"></Button>
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="Grid">
+                            <Setter Property="Margin" Value="15 0 15 0"></Setter>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBox materialDesign:HintAssist.Hint="Tên đăng nhập" VerticalAlignment="Center"
+                     Text="{Binding taiKhoan}"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <PasswordBox x:Name="FloatingPasswordBox" VerticalAlignment="Center"
+                         materialDesign:HintAssist.Hint="Mật khẩu"
+                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" 
+                           CommandParameter="{Binding ElementName=FloatingPasswordBox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0"  Command="{Binding LoginCommand}"  
+                    CommandParameter="{Binding ElementName=loginWindow}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"    
+                    Width="110"    
+                    ToolTip="Resource name: MaterialDesignRaisedButton" Content="Đăng nhập"></Button>
+                        <Button Grid.Column="1"  Command="{Binding CloseCommand}"
+                    CommandParameter="{Binding ElementName=loginWindow}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"    
+                    Width="110"    
+                    Background="OrangeRed"
+                    ToolTip="Resource name: MaterialDesignRaisedButton" Content="Thoát"></Button>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </materialDesign:Card>
+            </materialDesign:Card>
+        </Grid>
     </Grid>
 </Window>

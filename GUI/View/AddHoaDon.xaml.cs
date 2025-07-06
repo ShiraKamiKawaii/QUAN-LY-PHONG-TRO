@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GUI.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace GUI.View
         public AddHoaDon()
         {
             InitializeComponent();
+            this.DataContext = new HoaDonVM();
         }
     }
 }

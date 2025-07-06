@@ -17,6 +17,7 @@ namespace GUI.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Phong()
         {
+            this.DichVuPhongs = new HashSet<DichVuPhong>();
             this.HoaDons = new HashSet<HoaDon>();
             this.KhachThues = new HashSet<KhachThue>();
         }
@@ -29,10 +30,14 @@ namespace GUI.Model
         public Nullable<System.DateTime> ngayVao { get; set; }
         public Nullable<System.DateTime> ngayHet { get; set; }
         public string tinhTrang { get; set; }
+        public int maNha { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DichVuPhong> DichVuPhongs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoaDon> HoaDons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KhachThue> KhachThues { get; set; }
+        public virtual Nha Nha { get; set; }
     }
 }

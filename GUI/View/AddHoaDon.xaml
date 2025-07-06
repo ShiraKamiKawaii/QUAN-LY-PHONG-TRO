@@ -18,9 +18,8 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         Name="AddHoaDonWindow"
-
         WindowStartupLocation="CenterScreen"
-        Title="Thêm hóa đơn" Height="450" Width="500">
+        Title="Thêm hóa đơn" Height="830" Width="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -32,10 +31,32 @@
         </Grid>
         <materialDesign:Card Grid.Row="1">
             <StackPanel Margin="0 0 0 10">
-                <ComboBox Margin="5"  DisplayMemberPath="tenPhong" ItemsSource="{Binding ListPhong}" SelectedItem="{Binding SelectedPhong, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Phòng" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
-                <TextBox Margin="5" materialDesign:HintAssist.Hint="Tên Dịch Vụ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding tenDV}"></TextBox>
-                <TextBox Margin="5" materialDesign:HintAssist.Hint="Đơn Vị Tính" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding donVi}"></TextBox>
-                <TextBox Margin="5" materialDesign:HintAssist.Hint="Đơn Giá" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding donGia}"></TextBox>
+                <ComboBox Margin="5"  DisplayMemberPath="tenPhong" ItemsSource="{Binding ListPhong}" SelectedItem="{Binding SelectedPhong, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Phòng" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
+                <ComboBox Margin="5"  DisplayMemberPath="tenKT" ItemsSource="{Binding ListKhach}" SelectedItem="{Binding SelectedKhach, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Khách thuê" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
+                <DatePicker Margin="5" materialDesign:HintAssist.Hint="Ngày Lập Hóa Đơn" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Stretch" SelectedDate="{Binding ngayLap, StringFormat='dd/MM/yyyy', UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+                <TextBox Margin="5" materialDesign:HintAssist.Hint="Tiền Phòng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding tienPhong, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <GroupBox Header="Điện" Margin="5">
+                    <StackPanel>
+                        <TextBox Margin="5" materialDesign:HintAssist.Hint="Số cũ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding chiSoCuDien, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Margin="5" materialDesign:HintAssist.Hint="Số mới" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding chiSoMoiDien, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Nước" Margin="5">
+                    <StackPanel>
+                        <TextBox Margin="5" materialDesign:HintAssist.Hint="Số cũ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding chiSoCuNuoc, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBox Margin="5" materialDesign:HintAssist.Hint="Số mới" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding chiSoMoiNuoc, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Vệ Sinh" Margin="5">
+                    <TextBox Margin="5" materialDesign:HintAssist.Hint="Số người" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding soNguoi, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </GroupBox>
+                <GroupBox Header="Internet" Margin="5">
+                    <TextBox Margin="5" materialDesign:HintAssist.Hint="Tháng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding soThangInternet, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </GroupBox>
+                <WrapPanel Margin="5">
+                    <Label Content="Tổng cộng:" Margin="5" Height="30" FontWeight="Bold" FontSize="17" Background="White" Foreground="#E554D01E"/>
+                    <TextBlock Margin="5" Height="30" Padding="5" FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Text="{Binding tong, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"></TextBlock>
+                </WrapPanel>
             </StackPanel>
         </materialDesign:Card>
         <materialDesign:Card Grid.Row="2">

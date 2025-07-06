@@ -36,7 +36,7 @@
                 <TextBox Margin="5" materialDesign:HintAssist.Hint="Địa Chỉ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding diaChi, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <TextBox Margin="5" materialDesign:HintAssist.Hint="Điện Thoại" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding dienThoai, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                 <TextBox Margin="5" materialDesign:HintAssist.Hint="CCCD" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Stretch" Text="{Binding CCCD, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <ComboBox Margin="5"  DisplayMemberPath="tenPhong" SelectedValuePath="maPhong" ItemsSource="{Binding ListPhong}" SelectedItem="{Binding SelectedPhong, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Phòng" IsEditable="True" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
+                <ComboBox Margin="5"  DisplayMemberPath="tenPhong" SelectedValuePath="maPhong" ItemsSource="{Binding ListPhong}" SelectedItem="{Binding SelectedPhong, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Phòng" Style="{StaticResource MaterialDesignFloatingHintComboBox}" ></ComboBox>
             </StackPanel>
         </materialDesign:Card>
         <materialDesign:Card Grid.Row="2">

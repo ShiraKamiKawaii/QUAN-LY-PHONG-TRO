@@ -18,18 +18,22 @@ namespace GUI.ViewModel
     {
         private ObservableCollection<Model.Phong> _List;
         public ObservableCollection<Model.Phong> List { get => _List; set { _List = value; OnPropertyChanged(); } }
+        private ObservableCollection<Model.Nha> _ListNha;
+        public ObservableCollection<Model.Nha> ListNha { get => _ListNha; set { _ListNha = value; OnPropertyChanged(); } }
         public ICommand AddPhongFormCommand { get; set; }
         public ICommand EditPhongFormCommand { get; set; }
         public ICommand AddPhongCommand { get; set; }
         public ICommand EditPhongCommand { get; set; }
         public ICommand DeletePhongCommand { get; set; }
         public ICommand ExportExcelCommand { get; set; }
+        public Action OnReload { get; set; }
         private string _tenPhong;
         private int _giaThue;
         private int _tienNo;
         private int _dienTich;
         private DateTime? _ngayVao;
         private DateTime? _ngayHet;
+        private int _maNha;
         private Model.Phong _SelectedItem;
         public Model.Phong SelectedItem
         {
@@ -45,23 +49,51 @@ namespace GUI.ViewModel
                     dienTich = (int)SelectedItem.dienTich;
                     ngayVao = SelectedItem.ngayVao;
                     ngayHet = SelectedItem.ngayHet;
+                    maNha = SelectedItem.maNha;
                 }
             }
         }
+        private Model.Nha _SelectedNha;
+        public Model.Nha SelectedNha
+        {
+            get => _SelectedNha;
+            set
+            {
+                _SelectedNha = value;
+                OnPropertyChanged();
+                LoadPhongTheoNha();
+            }
+        }
+        public int maNha { get => _maNha; set { _maNha = value;OnPropertyChanged(); } }
         public string tenPhong { get => _tenPhong; set { _tenPhong = value; OnPropertyChanged(); } }
         public int giaThue { get => _giaThue; set { _giaThue = value; OnPropertyChanged(); } }
         public int tienNo { get => _tienNo; set { _tienNo = value; OnPropertyChanged(); } }
         public int dienTich { get => _dienTich; set { _dienTich = value; OnPropertyChanged(); } }
         public DateTime? ngayVao { get => _ngayVao; set { _ngayVao = value; OnPropertyChanged(); } }
         public DateTime? ngayHet { get => _ngayHet; set { _ngayHet = value; OnPropertyChanged(); } }
-        private void LoadList()
+        private void LoadPhongTheoNha()
         {
-            List = new ObservableCollection<Model.Phong>(DataProvider.Ins.db.Phongs.ToList());
+            if (SelectedNha != null)
+            {
+                List = new ObservableCollection<Model.Phong>(
+                    DataProvider.Ins.db.Phongs.Where(x => x.maNha == SelectedNha.maNha)
+                );
+            }
+            else
+            {
+                List = new ObservableCollection<Model.Phong>();
+            }
         }
+
         public PhongVM()
         {
-            List = new ObservableCollection<Model.Phong>(DataProvider.Ins.db.Phongs);
-            AddPhongFormCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AddPhong wd = new AddPhong(); wd.ShowDialog(); });
+            ListNha = new ObservableCollection<Model.Nha>(DataProvider.Ins.db.Nhas.ToList());
+            List = new ObservableCollection<Model.Phong>();
+            if(ListNha != null && ListNha.Count > 0)
+            {
+                SelectedNha = ListNha.First();
+            }
+            AddPhongFormCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AddPhong wd = new AddPhong(); PhongVM vm = new PhongVM(); vm.OnReload = LoadPhongTheoNha; wd.DataContext = vm; wd.ShowDialog(); });
             EditPhongFormCommand = new RelayCommand<object>(
                 (p) => SelectedItem != null,
                 (p) =>
@@ -77,6 +109,9 @@ namespace GUI.ViewModel
                         ngayHet = SelectedItem.ngayHet,
                         SelectedItem = SelectedItem
                     };
+                    editVM.ListNha = new ObservableCollection<Model.Nha>(DataProvider.Ins.db.Nhas.ToList());
+                    editVM.SelectedNha = editVM.ListNha.FirstOrDefault(x => x.maNha == SelectedItem.maNha);
+                    editVM.OnReload = LoadPhongTheoNha;
                     formEdit.DataContext = editVM;
                     formEdit.ShowDialog();
                 }
@@ -103,10 +138,11 @@ namespace GUI.ViewModel
                     System.Windows.MessageBox.Show("Diện tích phải lớn hơn 0!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                var phong = new Model.Phong() { tenPhong = tenPhong, giaThue = giaThue, tienNo = 0, dienTich = dienTich, ngayVao = ngayVao, ngayHet = ngayHet, tinhTrang ="Đang Trống" };
+                var phong = new Model.Phong() { tenPhong = tenPhong, giaThue = giaThue, tienNo = 0, dienTich = dienTich, ngayVao = ngayVao, ngayHet = ngayHet, tinhTrang = "Đang trống", maNha= SelectedNha.maNha };
                 DataProvider.Ins.db.Phongs.Add(phong);
                 DataProvider.Ins.db.SaveChanges();
                 System.Windows.MessageBox.Show("Thêm phòng thành công");
+                OnReload?.Invoke();
                 if (p is Window window)
                 {
                     window.Close();
@@ -132,8 +168,10 @@ namespace GUI.ViewModel
                 phong.dienTich = dienTich;
                 phong.ngayVao = ngayVao;
                 phong.ngayHet = ngayHet;
+                phong.maNha = SelectedNha.maNha;
                 DataProvider.Ins.db.SaveChanges();
                 System.Windows.MessageBox.Show("Cập nhật phòng thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                OnReload?.Invoke();
                 if (p is Window window)
                 {
                     window.Close();
@@ -159,7 +197,7 @@ namespace GUI.ViewModel
                         System.Windows.MessageBox.Show("Xóa phòng thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
                         // Load lại danh sách nếu bạn có ListDichVu
-                        LoadList();
+                        LoadPhongTheoNha();
                     }
                 }
             );

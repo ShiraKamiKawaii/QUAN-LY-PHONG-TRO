@@ -79,7 +79,7 @@ namespace GUI.ViewModel
             AddNhaCommand = new RelayCommand<object>(
                 (p) =>
                 {
-                    return !string.IsNullOrEmpty(tenNha) && soPhong > 0;
+                    return !string.IsNullOrEmpty(tenNha) && soPhong > 0 && dienTich > 0 && giaThue > 0;
 
                 },
                 (p) =>

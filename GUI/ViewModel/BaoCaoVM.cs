@@ -46,7 +46,7 @@ namespace GUI.ViewModel
             foreach (var nha in listNha)
             {
                 var tongPhong = DataProvider.Ins.db.Phongs.Count(p => p.maNha == nha.maNha);
-                var phongDangThue = DataProvider.Ins.db.Phongs.Count(p => p.maNha == nha.maNha && p.tinhTrang == "Đang thuê");
+                var phongDangThue = DataProvider.Ins.db.Phongs.Count(p => p.maNha == nha.maNha && p.tinhTrang == "Đang ở");
                 var phongDangNo = DataProvider.Ins.db.Phongs.Count(p => p.maNha == nha.maNha && p.tienNo > 0);
 
                 var tongKhach = (from kt in DataProvider.Ins.db.KhachThues

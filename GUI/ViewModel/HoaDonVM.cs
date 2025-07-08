@@ -170,12 +170,17 @@ namespace GUI.ViewModel
                 ).ToList()
             );
         }
-        private void ThemHoaDon()
+        private bool ThemHoaDon()
         {
+            if (SelectedPhong == null)
+            {
+                System.Windows.MessageBox.Show("Vui lòng chọn phòng!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
             if (SelectedKhach == null)
             {
                 System.Windows.MessageBox.Show("Vui lòng chọn khách thuê!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                return false;
             }
 
             var hoaDon = new Model.HoaDon
@@ -210,6 +215,7 @@ namespace GUI.ViewModel
             DataProvider.Ins.db.SaveChanges();
             CapNhatTienNoCuaPhong(hoaDon.maPhong);
             System.Windows.MessageBox.Show("Tạo hóa đơn thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            return true;
         }
 
         private void CapNhatChiSoDichVuPhong(string tenDV, int chiSoMoi)
@@ -485,9 +491,12 @@ namespace GUI.ViewModel
             },
             (p) =>
             {
-                ThemHoaDon();
-                OnReload?.Invoke();
-                if (p is Window wd) wd.Close();
+                bool thanhCong = ThemHoaDon();
+                if (thanhCong)
+                {
+                    OnReload?.Invoke();
+                    if (p is Window wd) wd.Close();
+                }
             }
             );
             EditHoaDonCommand = new RelayCommand<object>(
